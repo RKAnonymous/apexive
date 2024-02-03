@@ -6,9 +6,9 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import generics as rest_generics
+from rest_framework import viewsets as rest_viewsets
 from pilotlog import models as pl_models
 from pilotlog import serializers as pl_serializers
-from pilotlog.utils import get_serializer_class
 from pilotlog.paginations import CustomPagination
 from apexive.settings import BASE_DIR, MEDIA_ROOT
 
@@ -25,8 +25,6 @@ def import_api(request):
 		stdout=subprocess.PIPE,
 		stderr=subprocess.STDOUT
 	)
-	# out, err = proc.communicate()
-	# print(out or err)
 
 	return Response({"success": True, "message": "Importing started."}, status=status.HTTP_202_ACCEPTED)
 
@@ -64,11 +62,22 @@ def export_api(reqeust):
 	return Response({"success": True, "message": "Exporting started."}, status=status.HTTP_202_ACCEPTED)
 
 
-class AircraftListAPI(rest_generics.ListAPIView):
+class AircraftViewSet(rest_viewsets.ModelViewSet):
 	model = pl_models.Aircraft
 	queryset = pl_models.Aircraft.objects.all()
-	serializer_class = pl_serializers.AircraftSerializer
+	serializer_class = pl_serializers.AircraftDetailSerializer
 	pagination_class = CustomPagination
+
+	def get_queryset(self):
+		return self.queryset.filter(
+			Sea=False
+		)
+
+	def get_serializer_class(self):
+		if self.action == "list":
+			return pl_serializers.AircraftSerializer
+
+		return self.serializer_class
 
 
 class AirfieldListAPI(rest_generics.ListAPIView):
@@ -139,19 +148,3 @@ class PilotlogHeaderAPI(rest_generics.ListAPIView):
 	queryset = pl_models.PilotlogHeader.objects.all()
 	serializer_class = pl_serializers.PilotlogHeaderSerializer
 	pagination_class = CustomPagination
-
-
-class ExporterAPI(rest_generics.ListAPIView):
-	pagination_class = CustomPagination
-
-	def get_serializer_class(self):
-		query = self.request.query_params.get("from")
-		self.serializer_class = get_serializer_class(f"{query.capitalize()}Export")
-		return self.serializer_class
-
-	def get_queryset(self):
-		model_name = self.request.query_params.get("from")
-		model_name = model_name.capitalize() if model_name else ""
-		model = apps.get_model("pilotlog", model_name)
-		self.queryset = model.objects.all()
-		return self.queryset

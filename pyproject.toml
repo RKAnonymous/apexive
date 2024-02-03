@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Pilot Log"
+version = "1.0"
+description = "Coding Assignment test project for importng/exporting pilot log data."
+readme = "README.md"
+requires-python = ">=3.8.10"
+dependencies = [
+    "Django==4.2.9",
+    "djangorestframework==3.14.0",
+    "drf-yasg==1.21.7",
+    "psycopg2-binary==2.9.9",
+    "python-dotenv==1.0.1",
+    "tqdm==4.66.1",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-django",
+    "black==23.7.0",
+]

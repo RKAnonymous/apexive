@@ -15,6 +15,21 @@ class AircraftSerializer(serializers.ModelSerializer):
 		fields = "__all__"
 
 
+class AircraftDetailSerializer(serializers.ModelSerializer):
+
+	class Meta:
+		model = pl_models.Aircraft
+		fields = (
+			"id",
+			"Model",
+			"Company",
+			"Class",
+			"Power",
+			"Rating",
+			"Seats"
+		)
+
+
 class PilotSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = pl_models.Pilot
@@ -76,12 +91,12 @@ class AircraftForExportSerializer(serializers.ModelSerializer):
 	EngineType = serializers.CharField(source='EngType')
 	HighPerformance = serializers.BooleanField(source='HighPerf')
 
-	# EquipmentType = serializers.CharField()
-	# TypeCode = serializers.CharField()
-	# Year = serializers.IntegerField()
-	# GearType = serializers.CharField()
-	# Pressurized = serializers.BooleanField()
-	# TAA = serializers.BooleanField()
+	EquipmentType = serializers.SerializerMethodField("get_EquipmentType")
+	TypeCode = serializers.SerializerMethodField("get_TypeCode")
+	Year = serializers.SerializerMethodField("get_Year")
+	GearType = serializers.SerializerMethodField("get_GearType")
+	Pressurized = serializers.SerializerMethodField("get_Pressurized")
+	TAA = serializers.SerializerMethodField("get_TAA")
 
 	class Meta:
 		model = pl_models.Aircraft
@@ -94,14 +109,49 @@ class AircraftForExportSerializer(serializers.ModelSerializer):
 			'EngineType',
 			'Complex',
 			'HighPerformance',
-
-			# 'EquipmentType',
-			# 'TypeCode',
-			# 'Year',
-			# 'GearType',
-			# 'Pressurized',
-			# 'TAA'
+			'EquipmentType',
+			'TypeCode',
+			'Year',
+			'GearType',
+			'Pressurized',
+			'TAA'
 		)
+
+	def get_EquipmentType(self, obj):
+		# Get corresponding field from obj
+		# Do manipulation
+		# return changed data
+		pass
+
+	def get_TypeCode(self, obj):
+		# Get corresponding field from obj
+		# Do manipulation
+		# return changed data
+		pass
+
+	def get_Year(self, obj):
+		# Get corresponding field from obj
+		# Do manipulation
+		# return changed data
+		pass
+
+	def get_GearType(self, obj):
+		# Get corresponding field from obj
+		# Do manipulation
+		# return changed data
+		pass
+
+	def get_Pressurized(self, obj):
+		# Get corresponding field from obj
+		# Do manipulation
+		# return changed data
+		pass
+
+	def get_TAA(self, obj):
+		# Get corresponding field from obj
+		# Do manipulation
+		# return changed data
+		pass
 
 
 class FlightExportSerializer(serializers.ModelSerializer):

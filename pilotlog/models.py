@@ -9,20 +9,20 @@ class Aircraft(models.Model):
 	FNPT = models.IntegerField(default=0, blank=True, null=True)
 	Make = models.CharField(max_length=255, blank=True, null=True)
 	Run2 = models.BooleanField(default=False, blank=True, null=True)
-	Class = models.IntegerField(blank=True, null=True)  #
-	Model = models.CharField(max_length=255, blank=True, null=True) #
+	Class = models.IntegerField(blank=True, null=True)
+	Model = models.CharField(max_length=255, blank=True, null=True)
 	Power = models.IntegerField(blank=True, null=True)
 	Seats = models.IntegerField(blank=True, null=True)
 	Active = models.BooleanField(blank=True, null=True)
 	Kg5700 = models.BooleanField(blank=True, null=True)
 	Rating = models.CharField(max_length=50, blank=True, null=True)
 	Company = models.CharField(max_length=255, blank=True, null=True)
-	Complex = models.BooleanField(blank=True, null=True)  #
+	Complex = models.BooleanField(blank=True, null=True)
 	CondLog = models.IntegerField(blank=True, null=True)
-	EngType = models.IntegerField(blank=True, null=True)  #
-	EngGroup = models.IntegerField(blank=True, null=True)  #
+	EngType = models.IntegerField(blank=True, null=True)
+	EngGroup = models.IntegerField(blank=True, null=True)
 	FavList = models.BooleanField(blank=True, null=True)
-	Category = models.IntegerField(blank=True, null=True)  #
+	Category = models.IntegerField(blank=True, null=True)
 	HighPerf = models.BooleanField(blank=True, null=True)
 	SubModel = models.CharField(max_length=50, blank=True, null=True)
 	Aerobatic = models.BooleanField(blank=True, null=True)
