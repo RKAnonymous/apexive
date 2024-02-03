@@ -1,0 +1,32 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+
+# Editor #
+.idea/*
+
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+*.sqlite3
+media
+
+# Python #
+*.py[cod]
+*$py.class
+
+
+# Custom Files #
+db_conf.json
+export - logbook_template.csv
+import - pilotlog_mcc.json
+prettified.json
