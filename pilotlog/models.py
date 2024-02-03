@@ -254,12 +254,29 @@ class Imagepic(models.Model):
 
 
 class PilotlogHeader(models.Model):
+	"""
+	Model to save logs main data - header
+	"""
 	user_id = models.IntegerField(blank=True, null=True)
 	table = models.CharField(max_length=255, blank=True, null=True)
 	guid = models.CharField(max_length=255, blank=True, null=True)
 	platform = models.IntegerField(blank=True, null=True)
 	modified = models.IntegerField(blank=True, null=True)
 	created_at = models.DateTimeField(auto_now_add=True, null=True)
+
+	# Sub Data models might be related to header data
+	# when one of them has a value the others leave empty/null
+
+	# aircraft = models.ForeignKey(Aircraft, on_delete=models.CASCADE, blank=True, null=True)
+	# airfield = models.ForeignKey(Airfield, on_delete=models.CASCADE, blank=True, null=True)
+	# flight = models.ForeignKey(Flight, on_delete=models.CASCADE, blank=True, null=True)
+	# pilot = models.ForeignKey(Pilot, on_delete=models.CASCADE, blank=True, null=True)
+	# qualification = models.ForeignKey(Qualification, on_delete=models.CASCADE, blank=True, null=True)
+	# my_query = models.ForeignKey(MyQuery, on_delete=models.CASCADE, blank=True, null=True)
+	# my_query_build = models.ForeignKey(MyQueryBuild, on_delete=models.CASCADE, blank=True, null=True)
+	# image = models.ForeignKey(Imagepic, on_delete=models.CASCADE, blank=True, null=True)
+	# setting_config = models.ForeignKey(SettingConfig, on_delete=models.CASCADE, blank=True, null=True)
+	# limit_rules = models.ForeignKey(LimitRules, on_delete=models.CASCADE, blank=True, null=True)
 
 	def __str__(self):
 		return str(self.table)

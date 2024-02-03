@@ -78,6 +78,24 @@ class PilotlogHeaderSerializer(serializers.ModelSerializer):
 		model = pl_models.PilotlogHeader
 		fields = "__all__"
 
+	# def to_representation(self, instance):
+	# 	represent = super(PilotlogHeaderSerializer, self).to_representation(instance)
+	# 	represent.update(
+	# 		{
+	# 			"aircraft": AircraftSerializer().to_representation(instance.aircraft),
+	# 			"airfield": AirfieldSerializer().to_representation(instance.airfield),
+	# 			"flight": FlightSerializer().to_representation(instance.flight),
+	# 			"pilot": PilotSerializer().to_representation(instance.pilot),
+	# 			"qualification": QualificationSerializer().to_representation(instance.qualification),
+	# 			"my_query": MyQuerySerializer().to_representation(instance.my_query),
+	# 			"my_query_build": MyQueryBuildSerializer().to_representation(instance.my_query_build),
+	# 			"image": ImagePicSerializer().to_representation(instance.image),
+	# 			"setting_config": SettingConfigSerializer().to_representation(instance.setting_config),
+	# 			"limit_rules": LimitRulesSerializer().to_representation(instance.limit_rules),
+	# 		}
+	# 	)
+	# 	return represent
+
 
 class SettingConfigSerializer(serializers.ModelSerializer):
 
