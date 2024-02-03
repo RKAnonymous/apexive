@@ -33,26 +33,27 @@ Imported data can be checked by requesting List API endpoints to corresponding t
   
 
 
-## [Politlog app](https://github.com/RKAnonymous/apexive/tree/master/pilotlog)
+## [Pilotlog app](https://github.com/RKAnonymous/apexive/tree/master/pilotlog)
 DB connector to save data from [`import - politlog_mcc.json`](https://drive.google.com/file/d/1lGrLbKHK25O18Fnt0uvosteRcEIxpGqg/view?usp=drive_link) to DB in a structured way.
 
 #### Endpoints
 
-    +-----------------+-----------------------------------+-------------------+--------------------------------------+
-    | URL             |     OUTCOME                       |    SUCCESS        |      RESULT DESCRIPTION              |
-    +-----------------+-----------------------------------+-------------------+--------------------------------------+
-    | import/         |   - run importer                  |   - 202 Accepted  |      Request accepted to import data |
-    | aircraft/       |   - list of Aircraft objects      |   - 200 OK        |      Paginated list of objects       |
-    | airfield/       |   - list of Airfield objects      |   - 200 OK        |      Paginated list of objects       |
-    | flight/         |   - list of Flight objects        |   - 200 OK        |      Paginated list of objects       |
-    | image/          |   - list of ImagePic objects      |   - 200 OK        |      Paginated list of objects       |
-    | limit-rules/    |   - list of LimitRules objects    |   - 200 OK        |      Paginated list of objects       |
-    | my-query/       |   - list of myQuery objects       |   - 200 OK        |      Paginated list of objects       |
-    | my-query-build/ |   - list of myQueryBuild objects  |   - 200 OK        |      Paginated list of objects       |
-    | pilot/          |   - list of Pilot objects         |   - 200 OK        |      Paginated list of objects       |
-    | qualification/  |   - list of Qualification objects |   - 200 OK        |      Paginated list of objects       |
-    | setting-config/ |   - list of SettingConfig objects |   - 200 OK        |      Paginated list of objects       |
-    +-----------------+-----------------------------------+-------------------+--------------------------------------+
+    +-----------------+-----------------------------------+-------------------+--------------------------------------+--------------------------+
+    | URL             |     OUTCOME                       |    SUCCESS        |      RESULT DESCRIPTION              |         PARAMETERS       |
+    +-----------------+-----------------------------------+-------------------+--------------------------------------+--------------------------+
+    | import/         |   - run importer                  |   - 202 Accepted  |      Request accepted to import data |             -            |
+    | export/         |   - run exporter                  |   - 202 Accepted  |      Request accepted to import data |          filename        |
+    | aircraft/       |   - list of Aircraft objects      |   - 200 OK        |      Paginated list of objects       |             -            |
+    | airfield/       |   - list of Airfield objects      |   - 200 OK        |      Paginated list of objects       |             -            |
+    | flight/         |   - list of Flight objects        |   - 200 OK        |      Paginated list of objects       |             -            |
+    | image/          |   - list of ImagePic objects      |   - 200 OK        |      Paginated list of objects       |             -            |
+    | limit-rules/    |   - list of LimitRules objects    |   - 200 OK        |      Paginated list of objects       |             -            |
+    | my-query/       |   - list of myQuery objects       |   - 200 OK        |      Paginated list of objects       |             -            |
+    | my-query-build/ |   - list of myQueryBuild objects  |   - 200 OK        |      Paginated list of objects       |             -            |
+    | pilot/          |   - list of Pilot objects         |   - 200 OK        |      Paginated list of objects       |             -            |
+    | qualification/  |   - list of Qualification objects |   - 200 OK        |      Paginated list of objects       |             -            |
+    | setting-config/ |   - list of SettingConfig objects |   - 200 OK        |      Paginated list of objects       |             -            |
+    +-----------------+-----------------------------------+-------------------+--------------------------------------+--------------------------+
 
 
 ## Exporter
@@ -60,7 +61,7 @@ Data exporter in the format specified in [`export-logbook_template.csv`](https:/
 
 #### What should trigger the exporter?
  1. [Manual](https://github.com/RKAnonymous/apexive/blame/4459555070a98575dc991ffbfa2f48cd61a23d89/README.md#L137) usage of the script in views or another module
- 2. Generate API endpoint to invoke the script
+ 2. Generate [API](https://github.com/RKAnonymous/apexive/blob/e9bb5bdb2d2d5d5d36d6bd0ac0b249c21689cb47/pilotlog/views.py#L35) endpoint to invoke the script
  3. CRON job or Airflow DAG which executes the script at a specified time
 
 #### How Exporter works?

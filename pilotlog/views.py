@@ -33,15 +33,10 @@ def import_api(request):
 
 @api_view(["GET"])
 def export_api(reqeust):
-	download = reqeust.query_params.get("download")
 	filename = reqeust.query_params.get("filename")
-	subprocess.Popen(
-		["python3", f"{BASE_DIR}/exporter.py", f"--output={MEDIA_ROOT}/{filename}", "--format=json"],
-		stdout=subprocess.PIPE,
-		stderr=subprocess.STDOUT
-	)
 
-	if download:
+	# Look for file and return if exists
+	if filename:
 		file_path = f"{MEDIA_ROOT}/{filename}"
 		if not os.path.exists(file_path):
 			return Response(
@@ -58,6 +53,14 @@ def export_api(reqeust):
 			response["Content-Disposition"] = f'attachment; filename="{filename}"'
 			response.status_code = status.HTTP_200_OK
 			return response
+
+	# Start exporting to provided file
+	subprocess.Popen(
+		["python3", f"{BASE_DIR}/exporter.py", f"--output={MEDIA_ROOT}/{filename}", "--format=json"],
+		stdout=subprocess.PIPE,
+		stderr=subprocess.STDOUT
+	)
+
 	return Response({"success": True, "message": "Exporting started."}, status=status.HTTP_202_ACCEPTED)
 
 
