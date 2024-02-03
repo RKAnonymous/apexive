@@ -1,4 +1,6 @@
+import os.path
 import subprocess
+from django.http import HttpResponse
 from django.apps import apps
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -8,7 +10,7 @@ from pilotlog import models as pl_models
 from pilotlog import serializers as pl_serializers
 from pilotlog.utils import get_serializer_class
 from pilotlog.paginations import CustomPagination
-from apexive.settings import BASE_DIR
+from apexive.settings import BASE_DIR, MEDIA_ROOT
 
 
 @api_view(["GET"])
@@ -27,6 +29,36 @@ def import_api(request):
 	# print(out or err)
 
 	return Response({"success": True, "message": "Importing started."}, status=status.HTTP_202_ACCEPTED)
+
+
+@api_view(["GET"])
+def export_api(reqeust):
+	download = reqeust.query_params.get("download")
+	filename = reqeust.query_params.get("filename")
+	subprocess.Popen(
+		["python3", f"{BASE_DIR}/exporter.py", f"--output={MEDIA_ROOT}/{filename}", "--format=json"],
+		stdout=subprocess.PIPE,
+		stderr=subprocess.STDOUT
+	)
+
+	if download:
+		file_path = f"{MEDIA_ROOT}/{filename}"
+		if not os.path.exists(file_path):
+			return Response(
+				{
+					"success": False,
+					"message": "File not found.",
+					"description": f"Either {filename} not exists in DB or export process not finished yet."
+				},
+				status=status.HTTP_404_NOT_FOUND
+			)
+
+		with open(file_path, "rb") as document:
+			response = HttpResponse(document, content_type="application/json")
+			response["Content-Disposition"] = f'attachment; filename="{filename}"'
+			response.status_code = status.HTTP_200_OK
+			return response
+	return Response({"success": True, "message": "Exporting started."}, status=status.HTTP_202_ACCEPTED)
 
 
 class AircraftListAPI(rest_generics.ListAPIView):

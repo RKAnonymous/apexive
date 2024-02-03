@@ -1,9 +1,8 @@
 import csv
 import json
 from typing import Dict, Any
-
+from datetime import datetime
 from tqdm import tqdm
-
 from utils import QuickConnection, DB_CONF, EXPORTER_FILE
 
 
@@ -72,7 +71,8 @@ class Exporter:
 		Save reformatted data into pointed file..
 		:return:
 		"""
-		structured_data = self.reformat(self.get_data())
+		file = file if file else str(datetime.now().strftime("%Y-%m-%d_%H:%M"))+".json"
+		structured_data = self.reformat()
 		with open(file, "w") as f:
 			if fmt == "csv":
 				writer = csv.writer(f)

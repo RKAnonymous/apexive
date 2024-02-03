@@ -4,6 +4,7 @@ from pilotlog import views as pl_views
 
 urlpatterns = [
 	path("import/", pl_views.import_api, name="import"),
+	path("export/", pl_views.export_api, name="export"),
 	path("main/", pl_views.PilotlogHeaderAPI.as_view(), name="pilotlog"),
 	path("aircraft/", pl_views.AircraftListAPI.as_view(), name="aircraft"),
 	path("airfield/", pl_views.AirfieldListAPI.as_view(), name="airfield"),
